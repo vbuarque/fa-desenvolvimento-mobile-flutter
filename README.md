@@ -26,10 +26,8 @@ Sinta-se à vontade para navegar pelas pastas e explorar o código fonte relacio
 Para utilizar este repositório, você pode cloná-lo em sua máquina local usando o comando Git:
 
 ```
-git clone https://github.com/seu-usuario/seu-repositorio.git
+git clone https://github.com/vbuarque/fa-desenvolvimento-mobile-flutter.git
 ```
-
-Certifique-se de substituir `seu-usuario` e `seu-repositorio` com as informações corretas do seu usuário e repositório.
 
 Depois de clonar o repositório, você pode acessar cada atividade individualmente e examinar os arquivos relacionados a ela.
 
