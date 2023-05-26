@@ -1,0 +1,268 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Login App',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: LoginPage(),
+      routes: {
+        '/second': (context) => SecondPage(),
+        '/third': (context) => ThirdPage(technologies: [],),
+      },
+    );
+  }
+}
+
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  String _errorMessage = '';
+
+  void _login() {
+    String username = _usernameController.text;
+    String password = _passwordController.text;
+
+    if (username == 'teste' && password == '123') {
+      Navigator.pushReplacementNamed(context, '/second');
+    } else if (username.isEmpty || password.isEmpty) {
+      setState(() {
+        _errorMessage = 'Fornecer informações para acesso';
+      });
+    } else {
+      setState(() {
+        _errorMessage = 'Acesso não permitido';
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Página de Login')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          
+          children: [
+             Image.asset(
+                'lib/assets/Login.png', // Insira o caminho da imagem aqui
+                width: 150,
+                height: 150,
+              ),
+            TextField(
+              controller: _usernameController,
+              decoration: InputDecoration(
+                labelText: 'Username',
+                prefixIcon: Icon(Icons.person),
+              ),
+            ),
+            TextField(
+              controller: _passwordController,
+              decoration: InputDecoration(
+                labelText: 'Password',
+                prefixIcon: Icon(Icons.lock)
+              ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: _login,
+              child: Text('Entrar'),
+            ),
+            Text(
+              _errorMessage,
+              style: TextStyle(color: Colors.red),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SecondPage extends StatefulWidget {
+  @override
+  _SecondPageState createState() => _SecondPageState();
+}
+
+class _SecondPageState extends State<SecondPage> {
+  List<String> _selectedTechnologies = [];
+
+  void _submit() {
+  if (_selectedTechnologies.isNotEmpty) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ThirdPage(technologies: _selectedTechnologies),
+      ),
+    );
+  }
+}
+
+void _logOut() {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => LoginPage()
+    )
+  );
+}
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Selecione suas tecnologias favoritas')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Selecione as tecnologias:'),
+            CheckboxListTile(
+              title: Text('Flutter',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+  
+              value: _selectedTechnologies.contains('Flutter'),
+              onChanged: (value) {
+                setState(() {
+                  if (value!) {
+                    _selectedTechnologies.add('Flutter');
+                  } else {
+                    _selectedTechnologies.remove('Flutter');
+                  }
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: Text('React Native',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+              value: _selectedTechnologies.contains('React Native'),
+              onChanged: (value) {
+                setState(() {
+                  if (value!) {
+                    _selectedTechnologies.add('React Native');
+                  } else {
+                    _selectedTechnologies.remove('React Native');
+                  }
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: Text('Kotlin',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+              value: _selectedTechnologies.contains('Kotlin'),
+              onChanged: (value) {
+                setState(() {
+                  if (value!) {
+                    _selectedTechnologies.add('Kotlin');
+                  } else {
+                    _selectedTechnologies.remove('Kotlin');
+                  }
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: Text('Java',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+              value: _selectedTechnologies.contains('Java'),
+              onChanged: (value) {
+                setState(() {
+                  if (value!) {
+                    _selectedTechnologies.add('Java');
+                  } else {
+                    _selectedTechnologies.remove('Java');
+                  }
+                });
+              },
+            ),
+            CheckboxListTile(
+              title: Text('Ionic',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+              value: _selectedTechnologies.contains('Ionic'),
+              onChanged: (value) {
+                setState(() {
+                  if (value!) {
+                    _selectedTechnologies.add('Ionic');
+                  } else {
+                    _selectedTechnologies.remove('Ionic');
+                  }
+                });
+              },
+            ),
+            const SizedBox(height: 16.0),
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: _submit,
+                  child: Text('Enviar'),
+                ),
+                SizedBox(width: 16.0),
+                ElevatedButton(
+                  onPressed: _logOut,
+                  child: Text('Sair'),
+                )
+              ]
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ThirdPage extends StatelessWidget {
+  final List<String> technologies;
+
+  ThirdPage({required this.technologies});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Informações Enviadas')),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              children: [
+                ListTile(
+                  title: Text('Tecnologias selecionadas:'),
+                ),
+                for (String technology in technologies)
+                  ListTile(
+                    leading: Icon(Icons.check),
+                    title: Text(technology,
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              'Informações enviadas ao servidor',
+              style: TextStyle(fontSize: 18.0, color: Colors.green,),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
