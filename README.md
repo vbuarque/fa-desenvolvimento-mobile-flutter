@@ -9,14 +9,11 @@ O repositório é organizado em pastas, cada uma representando uma atividade esp
 Aqui está a estrutura básica do repositório:
 
 ```
-- Atividade1
-    - arquivo1
+- Provas
+    - prova1
 
-- Atividade2
-    - arquivo1
-
-- Atividade3
-    - arquivo1
+- Atividades
+    - atividade1
 ```
 
 Sinta-se à vontade para navegar pelas pastas e explorar o código fonte relacionado a cada atividade. Cada pasta é nomeada de acordo com a atividade correspondente.
