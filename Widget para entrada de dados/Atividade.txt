@@ -1,0 +1,265 @@
+import 'package:flutter/material.dart';
+import 'dart:async';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Formulário',
+      home: Forms(),
+    );
+  }
+}
+
+class Forms extends StatefulWidget {
+  @override
+  FormsState createState() => FormsState();
+}
+
+class FormsState extends State<Forms> {
+  final TextEditingController _nome = TextEditingController();
+  final TextEditingController _endereco = TextEditingController();
+  final TextEditingController _numero = TextEditingController();
+  final TextEditingController _complemento = TextEditingController();
+  final TextEditingController _uf = TextEditingController();
+  final TextEditingController _cep = TextEditingController();
+
+  Color textColor = Colors.black;
+  Color borderColor = Colors.grey;
+
+  String _result = "";
+  bool envio = false;
+  bool _showConfirmation = false;
+
+  void _enviar() {
+    setState(() {
+      changeEnvio(true);
+      changeTextColor(Colors.blue);
+      changeBorderColor(Colors.grey);
+      _result = "Formulário enviado!";
+
+      _showConfirmation = true;
+
+      Timer(Duration(seconds: 3), () {
+        setState(() {
+          _showConfirmation = false;
+        });
+      });
+    });
+  }
+
+  void _cancelar() {
+    setState(() {
+      _nome.text = "";
+      _endereco.text = "";
+      _numero.text = "";
+      _complemento.text = "";
+      _uf.text = "";
+      _cep.text = "";
+      _result = "";
+    });
+  }
+
+  void changeTextColor(Color newColor) {
+    setState(() {
+      textColor = newColor;
+    });
+  }
+
+  void changeBorderColor(Color newColor) {
+    setState(() {
+      borderColor = newColor;
+    });
+  }
+
+  void changeEnvio(bool e) {
+    setState(() {
+      envio = e;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Formulário'),
+      ),
+      body: Align(
+        alignment: Alignment.topCenter,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 100.0),
+              const Text(
+                'Formulário',
+                style: TextStyle(fontSize: 24.0, color: Colors.blue),
+              ),
+              const SizedBox(height: 16.0),
+              SizedBox(
+                width: 300,
+                child: TextField(
+                  controller: _nome,
+                  decoration: InputDecoration(
+                    labelText: 'Nome',
+                    prefixIcon: const Icon(Icons.person),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: borderColor),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              SizedBox(
+                width: 300,
+                child: TextField(
+                  controller: _endereco,
+                  decoration: InputDecoration(
+                    labelText: 'Endereço',
+                    prefixIcon: const Icon(Icons.home),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: borderColor),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              SizedBox(
+                width: 300,
+                child: TextField(
+                  controller: _numero,
+                  decoration: InputDecoration(
+                    labelText: 'Número',
+                    prefixIcon: const Icon(Icons.format_list_numbered),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: borderColor),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              SizedBox(
+                width: 300,
+                child: TextField(
+                  controller: _complemento,
+                  decoration: InputDecoration(
+                    labelText: 'Complemento',
+                    prefixIcon: const Icon(Icons.notes),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: borderColor),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              SizedBox(
+                width: 300,
+                child: TextField(
+                  controller: _uf,
+                  decoration: InputDecoration(
+                    labelText: 'UF',
+                    prefixIcon: const Icon(Icons.flag),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: borderColor),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              SizedBox(
+                width: 300,
+                child: TextField(
+                  controller: _cep,
+                  decoration: InputDecoration(
+                    labelText: 'CEP',
+                    prefixIcon: const Icon(Icons.mail),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: borderColor),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: _enviar,
+                    child: const Text('Enviar'),
+                  ),
+                  ElevatedButton(
+                    onPressed: _cancelar,
+                    child: const Text('Cancelar'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16.0),
+              if (_showConfirmation)
+                Text(
+                  'Formulário enviado!',
+                  style: TextStyle(fontSize: 24.0, color: Colors.green),
+                ),
+              const SizedBox(height: 16.0),
+              if (_result.isNotEmpty)
+                Column(
+                  children: [
+                    Text(
+                      'Informações enviadas:',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Text(
+                      'Nome: ${_nome.text}',
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                    Text(
+                      'Endereço: ${_endereco.text}',
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                    Text(
+                      'Número: ${_numero.text}',
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                    Text(
+                      'Complemento: ${_complemento.text}',
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                    Text(
+                      'UF: ${_uf.text}',
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                    Text(
+                      'CEP: ${_cep.text}',
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
